@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+  <title>MicroPython Smart Holiday Lights</title>
+</head>
+<body>
+  <h1>MicroPython Smart Holiday Lights pt. 2</h1>
+</body>
+
+<script>
+  // Static configuration:
+  var boardURL = 'ws://192.168.4.1:8266/';
+  var config = {
+    //colors: [[0,0,255], [16,0,128], [32,0,64], [64,0,32], [128,0,16], [255,0,0]],
+    colors: [[255,0,0], [128,16,0], [64,32,0], [32,64,0], [16,128,0], [0,255,0]],
+    period_ms: 100,
+    mirror_colors: true,
+    animation: "chase"
+  };
+
+  // Open an initialize the websocket connection.
+  ws = new WebSocket(boardURL);
+  ws.onopen = function() {
+    console.log('Connected!');
+    ws.onmessage = function(event) {
+      console.log(event.data);
+    };
+    // First send the password:
+    ws.send('python\r\n');
+    // Next send a Ctrl-C to break out of any running loop.
+    ws.send('\x03');
+    // Convert configuration to JSON formatted data.
+    var configJSON = JSON.stringify(config);
+    var configUint8Data = new Uint8Array(configJSON.length);
+    for (var i = 0; i < configJSON.length; ++i) {
+      configUint8Data[i] = configJSON.charCodeAt(i);
+    }
+    // Create a put file request to save a new config.json file on the board.
+    var dest_fname = 'config.json';
+    var dest_fsize = configUint8Data.length;
+    var rec = new Uint8Array(2 + 1 + 1 + 8 + 4 + 2 + 64);
+    rec[0] = 'W'.charCodeAt(0);
+    rec[1] = 'A'.charCodeAt(0);
+    rec[2] = 1; // put
+    rec[3] = 0;
+    rec[4] = 0; rec[5] = 0; rec[6] = 0; rec[7] = 0; rec[8] = 0; rec[9] = 0; rec[10] = 0; rec[11] = 0;
+    rec[12] = dest_fsize & 0xff; rec[13] = (dest_fsize >> 8) & 0xff; rec[14] = (dest_fsize >> 16) & 0xff; rec[15] = (dest_fsize >> 24) & 0xff;
+    rec[16] = dest_fname.length & 0xff; rec[17] = (dest_fname.length >> 8) & 0xff;
+    for (var i = 0; i < 64; ++i) {
+        if (i < dest_fname.length) {
+            rec[18 + i] = dest_fname.charCodeAt(i);
+        } else {
+            rec[18 + i] = 0;
+        }
+    }
+    ws.send(rec);
+    ws.send(configUint8Data);
+    ws.send('import machine\r\nmachine.reset()\r\n');
+  };
+  ws.onclose = function() {
+    console.log('Disconnected!');
+  }
+</script>
+
+</html>
+

@@ -1,0 +1,7 @@
+{
+    "colors": [[255,0,0], [128,16,0], [64,32,0], [32,64,0], [16,128,0], [0,255,0]]
+    "period_ms":100,
+    "mirror_colors": true,
+    "animation": "chase",
+    "pixels": 24
+}

@@ -1,0 +1,2 @@
+Micropython implementation of cylon/knightrider light-cycli.
+Deployed on ESP32 (WeMOS Lolin32) with micropython v1.8.6.

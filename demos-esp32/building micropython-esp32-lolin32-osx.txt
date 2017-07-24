@@ -1,0 +1,817 @@
+See here for latest tar.gz path: http://esp-idf.readthedocs.io/en/latest/get-started/macos-setup.html
+$ mkdir -p ~/esp
+$ cd ~/esp
+$ wget https://dl.espressif.com/dl/xtensa-esp32-elf-osx-1.22.0-61-gab8375a-5.2.0.tar.gz
+$ tar -xzf xtensa-esp32-elf-osx-1.22.0-61-gab8375a-5.2.0.tar.gz
+
+$ subl ~/.profile
+export PATH=$PATH:$HOME/esp/xtensa-esp32-elf/bin
+$ source ~/.profile
+
+$ cd ~/esp
+$ git clone --recursive https://github.com/espressif/esp-idf.git
+$ cd ~/esp/esp-idf
+$ git submodule update --init
+
+$ pip install esptool --upgrade
+Requirement already up-to-date: esptool in /usr/local/lib/python2.7/site-packages
+Collecting pyserial>=2.5 (from esptool)
+  Downloading pyserial-3.3-py2.py3-none-any.whl (189kB)
+    100% |████████████████████████████████| 194kB 2.0MB/s 
+Installing collected packages: pyserial
+  Found existing installation: pyserial 3.2.1
+    Uninstalling pyserial-3.2.1:
+      Successfully uninstalled pyserial-3.2.1
+Successfully installed pyserial-3.3
+
+$ pip install adafruit-ampy --upgrade
+Requirement already up-to-date: adafruit-ampy in /usr/local/lib/python2.7/site-packages
+Collecting click (from adafruit-ampy)
+  Using cached click-6.7-py2.py3-none-any.whl
+Requirement already up-to-date: pyserial in /usr/local/lib/python2.7/site-packages (from adafruit-ampy)
+Installing collected packages: click
+  Found existing installation: click 5.1
+    Uninstalling click-5.1:
+      Successfully uninstalled click-5.1
+Successfully installed click-6.7
+
+$ cd ~/dev
+$ git clone git@github.com:mcauser/micropython-esp32.git
+Cloning into 'micropython-esp32'...
+remote: Counting objects: 52715, done.
+remote: Compressing objects: 100% (4/4), done.
+remote: Total 52715 (delta 0), reused 0 (delta 0), pack-reused 52711
+Receiving objects: 100% (52715/52715), 29.02 MiB | 4.63 MiB/s, done.
+Resolving deltas: 100% (38666/38666), done.
+Checking connectivity... done.
+
+$ git remote add upstream git@github.com:micropython/micropython-esp32.git
+
+$ cd ~/dev/micropython-esp32
+$ make -C mpy-cross
+Use make V=1 or set BUILD_VERBOSE in your environment to increase build verbosity.
+mkdir -p build/genhdr
+Generating build/genhdr/mpversion.h
+GEN build/genhdr/qstr.i.last
+GEN build/genhdr/qstr.split
+GEN build/genhdr/qstrdefs.collected.h
+QSTR updated
+GEN build/genhdr/qstrdefs.generated.h
+mkdir -p build/py
+mkdir -p build/py/../extmod
+mkdir -p build/py/../lib/embed
+mkdir -p build/py/../lib/utils
+CC ../py/mpstate.c
+CC ../py/nlrx86.c
+CC ../py/nlrx64.c
+CC ../py/nlrthumb.c
+CC ../py/nlrxtensa.c
+CC ../py/nlrsetjmp.c
+CC ../py/malloc.c
+CC ../py/gc.c
+CC ../py/qstr.c
+CC ../py/vstr.c
+CC ../py/mpprint.c
+CC ../py/unicode.c
+CC ../py/mpz.c
+CC ../py/reader.c
+CC ../py/lexer.c
+CC ../py/parse.c
+CC ../py/scope.c
+CC ../py/compile.c
+CC ../py/emitcommon.c
+CC ../py/emitbc.c
+CC ../py/asmbase.c
+CC ../py/asmx64.c
+CC ../py/emitnative.c
+CC ../py/asmx86.c
+CC ../py/emitnative.c
+CC ../py/asmthumb.c
+CC ../py/emitnative.c
+CC ../py/emitinlinethumb.c
+CC ../py/asmarm.c
+CC ../py/emitnative.c
+CC ../py/asmxtensa.c
+CC ../py/emitnative.c
+CC ../py/emitinlinextensa.c
+CC ../py/formatfloat.c
+CC ../py/parsenumbase.c
+CC ../py/parsenum.c
+CC ../py/emitglue.c
+CC ../py/persistentcode.c
+CC ../py/runtime.c
+CC ../py/runtime_utils.c
+CC ../py/scheduler.c
+CC ../py/nativeglue.c
+CC ../py/stackctrl.c
+CC ../py/argcheck.c
+CC ../py/warning.c
+CC ../py/map.c
+CC ../py/obj.c
+CC ../py/objarray.c
+CC ../py/objattrtuple.c
+CC ../py/objbool.c
+CC ../py/objboundmeth.c
+CC ../py/objcell.c
+CC ../py/objclosure.c
+CC ../py/objcomplex.c
+CC ../py/objdict.c
+CC ../py/objenumerate.c
+CC ../py/objexcept.c
+CC ../py/objfilter.c
+CC ../py/objfloat.c
+CC ../py/objfun.c
+CC ../py/objgenerator.c
+CC ../py/objgetitemiter.c
+CC ../py/objint.c
+CC ../py/objint_longlong.c
+CC ../py/objint_mpz.c
+CC ../py/objlist.c
+CC ../py/objmap.c
+CC ../py/objmodule.c
+CC ../py/objobject.c
+CC ../py/objpolyiter.c
+CC ../py/objproperty.c
+CC ../py/objnone.c
+CC ../py/objnamedtuple.c
+CC ../py/objrange.c
+CC ../py/objreversed.c
+CC ../py/objset.c
+CC ../py/objsingleton.c
+CC ../py/objslice.c
+CC ../py/objstr.c
+CC ../py/objstrunicode.c
+CC ../py/objstringio.c
+CC ../py/objtuple.c
+CC ../py/objtype.c
+CC ../py/objzip.c
+CC ../py/opmethods.c
+CC ../py/sequence.c
+CC ../py/stream.c
+CC ../py/binary.c
+CC ../py/builtinimport.c
+CC ../py/builtinevex.c
+CC ../py/builtinhelp.c
+CC ../py/modarray.c
+CC ../py/modbuiltins.c
+CC ../py/modcollections.c
+CC ../py/modgc.c
+CC ../py/modio.c
+CC ../py/modmath.c
+CC ../py/modcmath.c
+CC ../py/modmicropython.c
+CC ../py/modstruct.c
+CC ../py/modsys.c
+CC ../py/moduerrno.c
+CC ../py/modthread.c
+CC ../py/vm.c
+CC ../py/bc.c
+CC ../py/showbc.c
+CC ../py/repl.c
+CC ../py/smallint.c
+CC ../py/frozenmod.c
+CC ../py/../extmod/moductypes.c
+CC ../py/../extmod/modujson.c
+CC ../py/../extmod/modure.c
+CC ../py/../extmod/moduzlib.c
+CC ../py/../extmod/moduheapq.c
+CC ../py/../extmod/modutimeq.c
+CC ../py/../extmod/moduhashlib.c
+CC ../py/../extmod/modubinascii.c
+CC ../py/../extmod/virtpin.c
+CC ../py/../extmod/machine_mem.c
+CC ../py/../extmod/machine_pinbase.c
+CC ../py/../extmod/machine_signal.c
+CC ../py/../extmod/machine_pulse.c
+CC ../py/../extmod/machine_i2c.c
+CC ../py/../extmod/machine_spi.c
+CC ../py/../extmod/modussl_axtls.c
+CC ../py/../extmod/modussl_mbedtls.c
+CC ../py/../extmod/modurandom.c
+CC ../py/../extmod/moduselect.c
+CC ../py/../extmod/modwebsocket.c
+CC ../py/../extmod/modwebrepl.c
+CC ../py/../extmod/modframebuf.c
+CC ../py/../extmod/vfs.c
+CC ../py/../extmod/vfs_reader.c
+CC ../py/../extmod/vfs_fat.c
+CC ../py/../extmod/vfs_fat_diskio.c
+CC ../py/../extmod/vfs_fat_file.c
+CC ../py/../extmod/vfs_fat_misc.c
+CC ../py/../extmod/utime_mphal.c
+CC ../py/../extmod/uos_dupterm.c
+CC ../py/../lib/embed/abort_.c
+CC ../py/../lib/utils/printf.c
+CC main.c
+CC gccollect.c
+LINK mpy-cross
+__TEXT	__DATA	__OBJC	others	dec	hex
+135168	16384	0	4294978640	4295130192	100027c50
+
+$ cd ~/dev/micropython-esp32/esp32
+$ subl Makefile
+ESPIDF = /Users/mike/esp/esp-idf
+PORT = /dev/tty.SLAB_USBtoUART
+BAUD = 920600
+
+$ cd ~/dev/micropython-esp32/esp32
+$ make clean
+Use make V=1 or set BUILD_VERBOSE in your environment to increase build verbosity.
+rm -rf build 
+
+$ cd ~/dev/micropython-esp32/esp32
+$ make erase
+Use make V=1 or set BUILD_VERBOSE in your environment to increase build verbosity.
+Erasing flash
+esptool.py v2.0-beta3
+Connecting........_
+Uploading stub...
+Running stub...
+Stub running...
+Changing baud rate to 460800
+Changed.
+Erasing flash (this may take a while)...
+Chip erase completed successfully in 3.1s
+Hard resetting...
+
+$ make erase
+Use make V=1 or set BUILD_VERBOSE in your environment to increase build verbosity.
+Erasing flash
+esptool.py v2.0-beta3
+Connecting........_
+Uploading stub...
+Running stub...
+Stub running...
+Changing baud rate to 460800
+Changed.
+Erasing flash (this may take a while)...
+Chip erase completed successfully in 0.7s
+Hard resetting...
+
+$ cd ~/dev/micropython-esp32/esp32
+$ make
+Use make V=1 or set BUILD_VERBOSE in your environment to increase build verbosity.
+mkdir -p build/bootloader//Users/mike/esp/esp-idf/components/bootloader/src/main
+mkdir -p build/bootloader//Users/mike/esp/esp-idf/components/bootloader_support/src
+mkdir -p build/bootloader//Users/mike/esp/esp-idf/components/log
+mkdir -p build/bootloader//Users/mike/esp/esp-idf/components/micro-ecc/micro-ecc
+mkdir -p build/bootloader//Users/mike/esp/esp-idf/components/soc/esp32
+mkdir -p build/bootloader//Users/mike/esp/esp-idf/components/spi_flash
+CC /Users/mike/esp/esp-idf/components/bootloader_support/src/bootloader_flash.c
+CC /Users/mike/esp/esp-idf/components/bootloader_support/src/bootloader_random.c
+CC /Users/mike/esp/esp-idf/components/bootloader_support/src/secure_boot_signatures.c
+CC /Users/mike/esp/esp-idf/components/bootloader_support/src/secure_boot.c
+CC /Users/mike/esp/esp-idf/components/bootloader_support/src/esp_image_format.c
+CC /Users/mike/esp/esp-idf/components/bootloader_support/src/flash_encrypt.c
+CC /Users/mike/esp/esp-idf/components/bootloader_support/src/flash_partitions.c
+CC /Users/mike/esp/esp-idf/components/log/log.c
+CC /Users/mike/esp/esp-idf/components/spi_flash/spi_flash_rom_patch.c
+CC /Users/mike/esp/esp-idf/components/soc/esp32/rtc_clk.c
+CC /Users/mike/esp/esp-idf/components/micro-ecc/micro-ecc/uECC.c
+CC /Users/mike/esp/esp-idf/components/bootloader/src/main/bootloader_start.c
+LINK build/bootloader.elf
+Create build/bootloader.bin
+esptool.py v2.0-beta3
+Create build/partitions.bin
+mkdir -p build/genhdr
+Generating build/genhdr/mpversion.h
+GEN build/genhdr/qstr.i.last
+GEN build/genhdr/qstr.split
+GEN build/genhdr/qstrdefs.collected.h
+QSTR updated
+GEN build/genhdr/qstrdefs.generated.h
+mkdir -p build//Users/mike/esp/esp-idf/components/cxx
+mkdir -p build//Users/mike/esp/esp-idf/components/driver
+mkdir -p build//Users/mike/esp/esp-idf/components/esp32
+mkdir -p build//Users/mike/esp/esp-idf/components/esp32/hwcrypto
+mkdir -p build//Users/mike/esp/esp-idf/components/ethernet
+mkdir -p build//Users/mike/esp/esp-idf/components/expat/library
+mkdir -p build//Users/mike/esp/esp-idf/components/expat/port
+mkdir -p build//Users/mike/esp/esp-idf/components/freertos
+mkdir -p build//Users/mike/esp/esp-idf/components/json/library
+mkdir -p build//Users/mike/esp/esp-idf/components/json/port
+mkdir -p build//Users/mike/esp/esp-idf/components/log
+mkdir -p build//Users/mike/esp/esp-idf/components/lwip/api
+mkdir -p build//Users/mike/esp/esp-idf/components/lwip/apps
+mkdir -p build//Users/mike/esp/esp-idf/components/lwip/apps/sntp
+mkdir -p build//Users/mike/esp/esp-idf/components/lwip/core
+mkdir -p build//Users/mike/esp/esp-idf/components/lwip/core/ipv4
+mkdir -p build//Users/mike/esp/esp-idf/components/lwip/core/ipv6
+mkdir -p build//Users/mike/esp/esp-idf/components/lwip/netif
+mkdir -p build//Users/mike/esp/esp-idf/components/lwip/port/freertos
+mkdir -p build//Users/mike/esp/esp-idf/components/lwip/port/netif
+mkdir -p build//Users/mike/esp/esp-idf/components/mbedtls/library
+mkdir -p build//Users/mike/esp/esp-idf/components/mbedtls/port
+mkdir -p build//Users/mike/esp/esp-idf/components/newlib
+mkdir -p build//Users/mike/esp/esp-idf/components/nghttp/library
+mkdir -p build//Users/mike/esp/esp-idf/components/nghttp/port
+mkdir -p build//Users/mike/esp/esp-idf/components/nvs_flash/src
+mkdir -p build//Users/mike/esp/esp-idf/components/soc/esp32
+mkdir -p build//Users/mike/esp/esp-idf/components/spi_flash
+mkdir -p build//Users/mike/esp/esp-idf/components/tcpip_adapter
+mkdir -p build//Users/mike/esp/esp-idf/components/vfs
+mkdir -p build//Users/mike/esp/esp-idf/components/wpa_supplicant/port
+mkdir -p build//Users/mike/esp/esp-idf/components/wpa_supplicant/src/crypto
+mkdir -p build//Users/mike/esp/esp-idf/components/xtensa-debug-module
+mkdir -p build/build
+mkdir -p build/drivers/dht
+mkdir -p build/esp8266
+mkdir -p build/lib/libm
+mkdir -p build/lib/mp-readline
+mkdir -p build/lib/netutils
+mkdir -p build/lib/oofatfs
+mkdir -p build/lib/oofatfs/option
+mkdir -p build/lib/timeutils
+mkdir -p build/lib/utils
+mkdir -p build/py
+mkdir -p build/py/../extmod
+mkdir -p build/py/../lib/embed
+mkdir -p build/stmhal
+CC ../py/mpstate.c
+CC ../py/nlrx86.c
+CC ../py/nlrx64.c
+CC ../py/nlrthumb.c
+CC ../py/nlrxtensa.c
+CC ../py/nlrsetjmp.c
+CC ../py/malloc.c
+CC ../py/gc.c
+CC ../py/qstr.c
+CC ../py/vstr.c
+CC ../py/mpprint.c
+CC ../py/unicode.c
+CC ../py/mpz.c
+CC ../py/reader.c
+CC ../py/lexer.c
+CC ../py/parse.c
+CC ../py/scope.c
+CC ../py/compile.c
+CC ../py/emitcommon.c
+CC ../py/emitbc.c
+CC ../py/asmbase.c
+CC ../py/asmx64.c
+CC ../py/emitnative.c
+CC ../py/asmx86.c
+CC ../py/emitnative.c
+CC ../py/asmthumb.c
+CC ../py/emitnative.c
+CC ../py/emitinlinethumb.c
+CC ../py/asmarm.c
+CC ../py/emitnative.c
+CC ../py/asmxtensa.c
+CC ../py/emitnative.c
+CC ../py/emitinlinextensa.c
+CC ../py/formatfloat.c
+CC ../py/parsenumbase.c
+CC ../py/parsenum.c
+CC ../py/emitglue.c
+CC ../py/persistentcode.c
+CC ../py/runtime.c
+CC ../py/runtime_utils.c
+CC ../py/scheduler.c
+CC ../py/nativeglue.c
+CC ../py/stackctrl.c
+CC ../py/argcheck.c
+CC ../py/warning.c
+CC ../py/map.c
+CC ../py/obj.c
+CC ../py/objarray.c
+CC ../py/objattrtuple.c
+CC ../py/objbool.c
+CC ../py/objboundmeth.c
+CC ../py/objcell.c
+CC ../py/objclosure.c
+CC ../py/objcomplex.c
+CC ../py/objdict.c
+CC ../py/objenumerate.c
+CC ../py/objexcept.c
+CC ../py/objfilter.c
+CC ../py/objfloat.c
+CC ../py/objfun.c
+CC ../py/objgenerator.c
+CC ../py/objgetitemiter.c
+CC ../py/objint.c
+CC ../py/objint_longlong.c
+CC ../py/objint_mpz.c
+CC ../py/objlist.c
+CC ../py/objmap.c
+CC ../py/objmodule.c
+CC ../py/objobject.c
+CC ../py/objpolyiter.c
+CC ../py/objproperty.c
+CC ../py/objnone.c
+CC ../py/objnamedtuple.c
+CC ../py/objrange.c
+CC ../py/objreversed.c
+CC ../py/objset.c
+CC ../py/objsingleton.c
+CC ../py/objslice.c
+CC ../py/objstr.c
+CC ../py/objstrunicode.c
+CC ../py/objstringio.c
+CC ../py/objtuple.c
+CC ../py/objtype.c
+CC ../py/objzip.c
+CC ../py/opmethods.c
+CC ../py/sequence.c
+CC ../py/stream.c
+CC ../py/binary.c
+CC ../py/builtinimport.c
+CC ../py/builtinevex.c
+CC ../py/builtinhelp.c
+CC ../py/modarray.c
+CC ../py/modbuiltins.c
+CC ../py/modcollections.c
+CC ../py/modgc.c
+CC ../py/modio.c
+CC ../py/modmath.c
+CC ../py/modcmath.c
+CC ../py/modmicropython.c
+CC ../py/modstruct.c
+CC ../py/modsys.c
+CC ../py/moduerrno.c
+CC ../py/modthread.c
+CC ../py/vm.c
+CC ../py/bc.c
+CC ../py/showbc.c
+CC ../py/repl.c
+CC ../py/smallint.c
+CC ../py/frozenmod.c
+CC ../py/../extmod/moductypes.c
+CC ../py/../extmod/modujson.c
+CC ../py/../extmod/modure.c
+CC ../py/../extmod/moduzlib.c
+CC ../py/../extmod/moduheapq.c
+CC ../py/../extmod/modutimeq.c
+CC ../py/../extmod/moduhashlib.c
+CC ../py/../extmod/modubinascii.c
+CC ../py/../extmod/virtpin.c
+CC ../py/../extmod/machine_mem.c
+CC ../py/../extmod/machine_pinbase.c
+CC ../py/../extmod/machine_signal.c
+CC ../py/../extmod/machine_pulse.c
+CC ../py/../extmod/machine_i2c.c
+CC ../py/../extmod/machine_spi.c
+CC ../py/../extmod/modussl_axtls.c
+CC ../py/../extmod/modussl_mbedtls.c
+CC ../py/../extmod/modurandom.c
+CC ../py/../extmod/moduselect.c
+CC ../py/../extmod/modwebsocket.c
+CC ../py/../extmod/modwebrepl.c
+CC ../py/../extmod/modframebuf.c
+CC ../py/../extmod/vfs.c
+CC ../py/../extmod/vfs_reader.c
+CC ../py/../extmod/vfs_fat.c
+CC ../py/../extmod/vfs_fat_diskio.c
+CC ../py/../extmod/vfs_fat_file.c
+CC ../py/../extmod/vfs_fat_misc.c
+CC ../py/../extmod/utime_mphal.c
+CC ../py/../extmod/uos_dupterm.c
+CC ../py/../lib/embed/abort_.c
+CC ../py/../lib/utils/printf.c
+MPY modules/_boot.py
+MPY modules/apa106.py
+MPY modules/dht.py
+MPY modules/ds18x20.py
+MPY modules/flashbdev.py
+MPY modules/inisetup.py
+MPY modules/neopixel.py
+MPY modules/onewire.py
+Creating build/frozen_mpy.c
+CC build/frozen_mpy.c
+CC main.c
+CC uart.c
+CC gccollect.c
+CC mphalport.c
+CC fatfs_port.c
+CC help.c
+CC esponewire.c
+CC modutime.c
+CC moduos.c
+CC machine_pin.c
+CC machine_touchpad.c
+CC machine_adc.c
+CC machine_dac.c
+CC modmachine.c
+CC modnetwork.c
+CC modsocket.c
+CC modesp.c
+CC espneopixel.c
+CC machine_hw_spi.c
+CC mpthreadport.c
+CC ../stmhal/pybstdio.c
+CC ../stmhal/input.c
+CC ../esp8266/modonewire.c
+CC ../lib/libm/math.c
+CC ../lib/libm/fmodf.c
+CC ../lib/libm/roundf.c
+CC ../lib/libm/ef_sqrt.c
+CC ../lib/libm/kf_rem_pio2.c
+CC ../lib/libm/kf_sin.c
+CC ../lib/libm/kf_cos.c
+CC ../lib/libm/kf_tan.c
+CC ../lib/libm/ef_rem_pio2.c
+CC ../lib/libm/sf_sin.c
+CC ../lib/libm/sf_cos.c
+CC ../lib/libm/sf_tan.c
+CC ../lib/libm/sf_frexp.c
+CC ../lib/libm/sf_modf.c
+CC ../lib/libm/sf_ldexp.c
+CC ../lib/libm/asinfacosf.c
+CC ../lib/libm/atanf.c
+CC ../lib/libm/atan2f.c
+CC ../lib/mp-readline/readline.c
+CC ../lib/netutils/netutils.c
+CC ../lib/timeutils/timeutils.c
+CC ../lib/utils/pyexec.c
+CC ../lib/utils/interrupt_char.c
+CC ../lib/oofatfs/ff.c
+CC ../lib/oofatfs/option/unicode.c
+CC ../drivers/dht/dht.c
+CC /Users/mike/esp/esp-idf/components/newlib/time.c
+CC /Users/mike/esp/esp-idf/components/newlib/syscalls.c
+CC /Users/mike/esp/esp-idf/components/newlib/syscall_table.c
+CC /Users/mike/esp/esp-idf/components/newlib/reent_init.c
+CC /Users/mike/esp/esp-idf/components/newlib/locks.c
+CC /Users/mike/esp/esp-idf/components/driver/uart.c
+CC /Users/mike/esp/esp-idf/components/driver/periph_ctrl.c
+CC /Users/mike/esp/esp-idf/components/driver/ledc.c
+CC /Users/mike/esp/esp-idf/components/driver/gpio.c
+CC /Users/mike/esp/esp-idf/components/driver/timer.c
+CC /Users/mike/esp/esp-idf/components/driver/spi_master.c
+CC /Users/mike/esp/esp-idf/components/driver/rtc_module.c
+CC /Users/mike/esp/esp-idf/components/esp32/app_trace.c
+CC /Users/mike/esp/esp-idf/components/esp32/panic.c
+CC /Users/mike/esp/esp-idf/components/esp32/event_default_handlers.c
+CC /Users/mike/esp/esp-idf/components/esp32/task_wdt.c
+CC /Users/mike/esp/esp-idf/components/esp32/cache_err_int.c
+CC /Users/mike/esp/esp-idf/components/esp32/core_dump.c
+CC /Users/mike/esp/esp-idf/components/esp32/cpu_start.c
+CC /Users/mike/esp/esp-idf/components/esp32/gdbstub.c
+CC /Users/mike/esp/esp-idf/components/esp32/crosscore_int.c
+CC /Users/mike/esp/esp-idf/components/esp32/deep_sleep.c
+CC /Users/mike/esp/esp-idf/components/esp32/heap_alloc_caps.c
+CC /Users/mike/esp/esp-idf/components/esp32/ipc.c
+CC /Users/mike/esp/esp-idf/components/esp32/int_wdt.c
+CC /Users/mike/esp/esp-idf/components/esp32/event_loop.c
+CC /Users/mike/esp/esp-idf/components/esp32/cpu_freq.c
+CC /Users/mike/esp/esp-idf/components/esp32/hwcrypto/sha.c
+CC /Users/mike/esp/esp-idf/components/esp32/hwcrypto/aes.c
+CC /Users/mike/esp/esp-idf/components/esp32/lib_printf.c
+CC /Users/mike/esp/esp-idf/components/esp32/freertos_hooks.c
+CC /Users/mike/esp/esp-idf/components/esp32/system_api.c
+CC /Users/mike/esp/esp-idf/components/esp32/hw_random.c
+CC /Users/mike/esp/esp-idf/components/esp32/phy_init.c
+CC /Users/mike/esp/esp-idf/components/esp32/intr_alloc.c
+CC /Users/mike/esp/esp-idf/components/soc/esp32/brownout.c
+CC /Users/mike/esp/esp-idf/components/soc/esp32/cpu_util.c
+CC /Users/mike/esp/esp-idf/components/soc/esp32/rtc_clk.c
+CC /Users/mike/esp/esp-idf/components/soc/esp32/rtc_init.c
+CC /Users/mike/esp/esp-idf/components/soc/esp32/rtc_pm.c
+CC /Users/mike/esp/esp-idf/components/soc/esp32/rtc_sleep.c
+CC /Users/mike/esp/esp-idf/components/soc/esp32/rtc_time.c
+CXX /Users/mike/esp/esp-idf/components/cxx/cxx_guards.cpp
+CC /Users/mike/esp/esp-idf/components/ethernet/emac_dev.c
+CC /Users/mike/esp/esp-idf/components/ethernet/emac_main.c
+CC /Users/mike/esp/esp-idf/components/expat/library/xmltok_ns.c
+CC /Users/mike/esp/esp-idf/components/expat/library/xmltok.c
+CC /Users/mike/esp/esp-idf/components/expat/library/xmlparse.c
+CC /Users/mike/esp/esp-idf/components/expat/library/xmlrole.c
+CC /Users/mike/esp/esp-idf/components/expat/library/xmltok_impl.c
+CC /Users/mike/esp/esp-idf/components/expat/port/minicheck.c
+CC /Users/mike/esp/esp-idf/components/expat/port/expat_element.c
+CC /Users/mike/esp/esp-idf/components/expat/port/chardata.c
+CC /Users/mike/esp/esp-idf/components/freertos/croutine.c
+CC /Users/mike/esp/esp-idf/components/freertos/event_groups.c
+CC /Users/mike/esp/esp-idf/components/freertos/FreeRTOS-openocd.c
+CC /Users/mike/esp/esp-idf/components/freertos/heap_regions_debug.c
+CC /Users/mike/esp/esp-idf/components/freertos/heap_regions.c
+CC /Users/mike/esp/esp-idf/components/freertos/list.c
+CC /Users/mike/esp/esp-idf/components/freertos/portasm.S
+CC /Users/mike/esp/esp-idf/components/freertos/port.c
+CC /Users/mike/esp/esp-idf/components/freertos/queue.c
+CC /Users/mike/esp/esp-idf/components/freertos/ringbuf.c
+CC /Users/mike/esp/esp-idf/components/freertos/tasks.c
+CC /Users/mike/esp/esp-idf/components/freertos/timers.c
+CC /Users/mike/esp/esp-idf/components/freertos/xtensa_context.S
+CC /Users/mike/esp/esp-idf/components/freertos/xtensa_init.c
+CC /Users/mike/esp/esp-idf/components/freertos/xtensa_intr_asm.S
+CC /Users/mike/esp/esp-idf/components/freertos/xtensa_intr.c
+CC /Users/mike/esp/esp-idf/components/freertos/xtensa_overlay_os_hook.c
+CC /Users/mike/esp/esp-idf/components/freertos/xtensa_vectors.S
+CC /Users/mike/esp/esp-idf/components/vfs/vfs_uart.c
+CC /Users/mike/esp/esp-idf/components/vfs/vfs.c
+CC /Users/mike/esp/esp-idf/components/json/library/cJSON.c
+CC /Users/mike/esp/esp-idf/components/json/port/cJSON_Utils.c
+CC /Users/mike/esp/esp-idf/components/log/log.c
+CC /Users/mike/esp/esp-idf/components/lwip/api/pppapi.c
+CC /Users/mike/esp/esp-idf/components/lwip/api/netbuf.c
+CC /Users/mike/esp/esp-idf/components/lwip/api/api_lib.c
+CC /Users/mike/esp/esp-idf/components/lwip/api/netifapi.c
+CC /Users/mike/esp/esp-idf/components/lwip/api/tcpip.c
+CC /Users/mike/esp/esp-idf/components/lwip/api/netdb.c
+CC /Users/mike/esp/esp-idf/components/lwip/api/err.c
+CC /Users/mike/esp/esp-idf/components/lwip/api/api_msg.c
+CC /Users/mike/esp/esp-idf/components/lwip/api/sockets.c
+CC /Users/mike/esp/esp-idf/components/lwip/apps/sntp/sntp.c
+CC /Users/mike/esp/esp-idf/components/lwip/apps/dhcpserver.c
+CC /Users/mike/esp/esp-idf/components/lwip/core/ipv4/ip_frag.c
+CC /Users/mike/esp/esp-idf/components/lwip/core/ipv4/dhcp.c
+CC /Users/mike/esp/esp-idf/components/lwip/core/ipv4/ip4_addr.c
+CC /Users/mike/esp/esp-idf/components/lwip/core/ipv4/igmp.c
+CC /Users/mike/esp/esp-idf/components/lwip/core/ipv4/ip4.c
+CC /Users/mike/esp/esp-idf/components/lwip/core/ipv4/autoip.c
+CC /Users/mike/esp/esp-idf/components/lwip/core/ipv4/icmp.c
+CC /Users/mike/esp/esp-idf/components/lwip/core/ipv6/ip6_frag.c
+CC /Users/mike/esp/esp-idf/components/lwip/core/ipv6/dhcp6.c
+CC /Users/mike/esp/esp-idf/components/lwip/core/ipv6/inet6.c
+CC /Users/mike/esp/esp-idf/components/lwip/core/ipv6/ip6_addr.c
+CC /Users/mike/esp/esp-idf/components/lwip/core/ipv6/ip6.c
+CC /Users/mike/esp/esp-idf/components/lwip/core/ipv6/nd6.c
+CC /Users/mike/esp/esp-idf/components/lwip/core/ipv6/mld6.c
+CC /Users/mike/esp/esp-idf/components/lwip/core/ipv6/ethip6.c
+CC /Users/mike/esp/esp-idf/components/lwip/core/ipv6/icmp6.c
+CC /Users/mike/esp/esp-idf/components/lwip/core/mem.c
+CC /Users/mike/esp/esp-idf/components/lwip/core/init.c
+CC /Users/mike/esp/esp-idf/components/lwip/core/memp.c
+CC /Users/mike/esp/esp-idf/components/lwip/core/sys.c
+CC /Users/mike/esp/esp-idf/components/lwip/core/tcp_in.c
+CC /Users/mike/esp/esp-idf/components/lwip/core/dns.c
+CC /Users/mike/esp/esp-idf/components/lwip/core/ip.c
+CC /Users/mike/esp/esp-idf/components/lwip/core/pbuf.c
+CC /Users/mike/esp/esp-idf/components/lwip/core/raw.c
+CC /Users/mike/esp/esp-idf/components/lwip/core/tcp.c
+CC /Users/mike/esp/esp-idf/components/lwip/core/def.c
+CC /Users/mike/esp/esp-idf/components/lwip/core/netif.c
+CC /Users/mike/esp/esp-idf/components/lwip/core/stats.c
+CC /Users/mike/esp/esp-idf/components/lwip/core/timers.c
+CC /Users/mike/esp/esp-idf/components/lwip/core/inet_chksum.c
+CC /Users/mike/esp/esp-idf/components/lwip/core/udp.c
+CC /Users/mike/esp/esp-idf/components/lwip/core/tcp_out.c
+CC /Users/mike/esp/esp-idf/components/lwip/netif/slipif.c
+CC /Users/mike/esp/esp-idf/components/lwip/netif/etharp.c
+CC /Users/mike/esp/esp-idf/components/lwip/netif/ethernet.c
+CC /Users/mike/esp/esp-idf/components/lwip/netif/lowpan6.c
+CC /Users/mike/esp/esp-idf/components/lwip/netif/ethernetif.c
+CC /Users/mike/esp/esp-idf/components/lwip/port/freertos/sys_arch.c
+CC /Users/mike/esp/esp-idf/components/lwip/port/netif/wlanif.c
+CC /Users/mike/esp/esp-idf/components/lwip/port/netif/ethernetif.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/entropy.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/net.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/pkcs12.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/ccm.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/pk.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/sha1.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/x509_csr.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/ssl_cli.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/ecp.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/blowfish.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/x509.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/ecp_curves.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/error.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/ssl_ticket.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/entropy_poll.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/cipher.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/version_features.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/ripemd160.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/rsa.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/md.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/md_wrap.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/sha256.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/dhm.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/ssl_cache.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/pkwrite.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/base64.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/asn1parse.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/ssl_tls.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/hmac_drbg.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/pem.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/version.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/gcm.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/memory_buffer_alloc.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/md2.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/ecdsa.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/ssl_srv.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/x509_crt.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/ecdh.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/asn1write.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/md4.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/debug.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/x509_create.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/ecjpake.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/oid.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/md5.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/ssl_ciphersuites.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/sha512.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/xtea.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/aes.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/cipher_wrap.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/arc4.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/bignum.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/pkparse.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/padlock.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/threading.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/x509_crl.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/pkcs11.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/aesni.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/timing.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/certs.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/pkcs5.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/ssl_cookie.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/camellia.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/havege.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/des.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/x509write_csr.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/platform.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/ctr_drbg.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/x509write_crt.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/library/pk_wrap.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/port/net.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/port/esp_bignum.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/port/esp_hardware.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/port/esp_sha1.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/port/esp_sha256.c
+CC /Users/mike/esp/esp-idf/components/mbedtls/port/esp_sha512.c
+CC /Users/mike/esp/esp-idf/components/xtensa-debug-module/eri.c
+CC /Users/mike/esp/esp-idf/components/xtensa-debug-module/trax.c
+CC /Users/mike/esp/esp-idf/components/tcpip_adapter/tcpip_adapter_lwip.c
+CC /Users/mike/esp/esp-idf/components/nghttp/library/nghttp2_http.c
+CC /Users/mike/esp/esp-idf/components/nghttp/library/nghttp2_version.c
+CC /Users/mike/esp/esp-idf/components/nghttp/library/nghttp2_mem.c
+CC /Users/mike/esp/esp-idf/components/nghttp/library/nghttp2_hd_huffman.c
+CC /Users/mike/esp/esp-idf/components/nghttp/library/nghttp2_rcbuf.c
+CC /Users/mike/esp/esp-idf/components/nghttp/library/nghttp2_callbacks.c
+CC /Users/mike/esp/esp-idf/components/nghttp/library/nghttp2_session.c
+CC /Users/mike/esp/esp-idf/components/nghttp/library/nghttp2_stream.c
+CC /Users/mike/esp/esp-idf/components/nghttp/library/nghttp2_hd.c
+CC /Users/mike/esp/esp-idf/components/nghttp/library/nghttp2_priority_spec.c
+CC /Users/mike/esp/esp-idf/components/nghttp/library/nghttp2_buf.c
+CC /Users/mike/esp/esp-idf/components/nghttp/library/nghttp2_option.c
+CC /Users/mike/esp/esp-idf/components/nghttp/library/nghttp2_npn.c
+CC /Users/mike/esp/esp-idf/components/nghttp/library/nghttp2_helper.c
+CC /Users/mike/esp/esp-idf/components/nghttp/library/nghttp2_frame.c
+CC /Users/mike/esp/esp-idf/components/nghttp/library/nghttp2_outbound_item.c
+CC /Users/mike/esp/esp-idf/components/nghttp/library/nghttp2_hd_huffman_data.c
+CC /Users/mike/esp/esp-idf/components/nghttp/library/nghttp2_pq.c
+CC /Users/mike/esp/esp-idf/components/nghttp/library/nghttp2_queue.c
+CC /Users/mike/esp/esp-idf/components/nghttp/library/nghttp2_submit.c
+CC /Users/mike/esp/esp-idf/components/nghttp/library/nghttp2_map.c
+CC /Users/mike/esp/esp-idf/components/nghttp/port/http_parser.c
+CXX /Users/mike/esp/esp-idf/components/nvs_flash/src/nvs_types.cpp
+CXX /Users/mike/esp/esp-idf/components/nvs_flash/src/nvs_page.cpp
+CXX /Users/mike/esp/esp-idf/components/nvs_flash/src/nvs_item_hash_list.cpp
+CXX /Users/mike/esp/esp-idf/components/nvs_flash/src/nvs_pagemanager.cpp
+CXX /Users/mike/esp/esp-idf/components/nvs_flash/src/nvs_storage.cpp
+CXX /Users/mike/esp/esp-idf/components/nvs_flash/src/nvs_api.cpp
+CC /Users/mike/esp/esp-idf/components/spi_flash/flash_mmap.c
+CC /Users/mike/esp/esp-idf/components/spi_flash/partition.c
+CC /Users/mike/esp/esp-idf/components/spi_flash/spi_flash_rom_patch.c
+CC /Users/mike/esp/esp-idf/components/spi_flash/cache_utils.c
+CC /Users/mike/esp/esp-idf/components/spi_flash/flash_ops.c
+CC /Users/mike/esp/esp-idf/components/wpa_supplicant/src/crypto/aes-internal-enc.c
+CC /Users/mike/esp/esp-idf/components/wpa_supplicant/src/crypto/sha256-internal.c
+CC /Users/mike/esp/esp-idf/components/wpa_supplicant/src/crypto/md5-internal.c
+CC /Users/mike/esp/esp-idf/components/wpa_supplicant/src/crypto/aes-internal.c
+CC /Users/mike/esp/esp-idf/components/wpa_supplicant/src/crypto/sha1.c
+CC /Users/mike/esp/esp-idf/components/wpa_supplicant/src/crypto/aes-internal-dec.c
+CC /Users/mike/esp/esp-idf/components/wpa_supplicant/src/crypto/aes-unwrap.c
+CC /Users/mike/esp/esp-idf/components/wpa_supplicant/src/crypto/crypto_internal-rsa.c
+CC /Users/mike/esp/esp-idf/components/wpa_supplicant/src/crypto/dh_groups.c
+CC /Users/mike/esp/esp-idf/components/wpa_supplicant/src/crypto/crypto_internal.c
+CC /Users/mike/esp/esp-idf/components/wpa_supplicant/src/crypto/aes-wrap.c
+CC /Users/mike/esp/esp-idf/components/wpa_supplicant/src/crypto/sha1-internal.c
+CC /Users/mike/esp/esp-idf/components/wpa_supplicant/src/crypto/dh_group5.c
+CC /Users/mike/esp/esp-idf/components/wpa_supplicant/src/crypto/sha256.c
+CC /Users/mike/esp/esp-idf/components/wpa_supplicant/src/crypto/rc4.c
+CC /Users/mike/esp/esp-idf/components/wpa_supplicant/src/crypto/md5.c
+CC /Users/mike/esp/esp-idf/components/wpa_supplicant/src/crypto/aes-cbc.c
+CC /Users/mike/esp/esp-idf/components/wpa_supplicant/src/crypto/sha1-pbkdf2.c
+CC /Users/mike/esp/esp-idf/components/wpa_supplicant/src/crypto/bignum.c
+CC /Users/mike/esp/esp-idf/components/wpa_supplicant/src/crypto/crypto_internal-modexp.c
+CC /Users/mike/esp/esp-idf/components/wpa_supplicant/src/crypto/crypto_internal-cipher.c
+CC /Users/mike/esp/esp-idf/components/wpa_supplicant/port/os_xtensa.c
+LINK build/application.elf
+   text	   data	    bss	    dec	    hex	filename
+ 665135	 166312	 137432	 968879	  ec8af	build/application.elf
+Create build/application.bin
+esptool.py v2.0-beta3
+Create build/firmware.bin
+bootloader     11248
+partitions      3072
+application   953744
+total        1019280
+
+$ cd ~/dev/micropython-esp32/esp32
+$ make deploy
+Use make V=1 or set BUILD_VERBOSE in your environment to increase build verbosity.
+Writing build/firmware.bin to the board
+esptool.py v2.0-beta3
+Connecting........__
+Uploading stub...
+Running stub...
+Stub running...
+Changing baud rate to 920600
+Changed.
+Configuring flash size...
+Compressed 1019280 bytes to 558262...
+Wrote 1019280 bytes (558262 compressed) at 0x00000000 in 10.0 seconds (effective 817.9 kbit/s)...
+Hash of data verified.
