@@ -13,15 +13,20 @@ import math
 import neopixel
 import time
 
-# 2017_0204 Feather Neopixel matrix: 8 * 4 pixels
+''' 2017_0204 Feather Neopixel matrix: 8 * 4 pixels
 # LED matrix: 8 * 8 pixels
 PIXEL_WIDTH = 8
 PIXEL_HEIGHT = 4 #8
-MAX_BRIGHT = 50.0  # 100.0
-
-# Pin number to which LED matrix is connected to..
 PIXEL_PIN = 15  #Feather Neopixel matrix connected  to pin GPIO15
+'''
+#''' 2017_0726 Lolin32 met neopixel ring (12 pixels) op GPIO15
+# LED matrix: 8 * 8 pixels
+PIXEL_WIDTH = 12
+PIXEL_HEIGHT = 1
+PIXEL_PIN = 15  #Feather Neopixel matrix connected  to pin GPIO15
+#'''
 #PIXEL_PIN = 13 #NodeMU: neopixel connected to pin GPIO13 (D7)
+MAX_BRIGHT = 10 #50.0  # 100.0
 
 # create a neopixel array
 #DEPRECATED: np = neopixel.NeoPixel(machine.Pin(13), PIXEL_WIDTH * PIXEL_HEIGHT)

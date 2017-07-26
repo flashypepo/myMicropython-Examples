@@ -12,24 +12,34 @@
 import time
 import machine, neopixel
 
-# 2016-1204: configuration NodeMCU
-#   neopixels (8*8) connected to pin D7 (GPIO13)
-PIXEL_PIN = machine.Pin(13, machine.Pin.OUT) 
-PIXEL_COUNT = 64  # number of neopixels
+''' 2016-1204: configuration NodeMCU: #pixels=8*8, pin D7 (GPIO13)
+NEOPIN = 13
+PIXEL_COUNT = 64
+'''
+#''' 2017-0726: Lolin32: pin=15, #np=12
+NEOPIN = 15
+PIXEL_COUNT = 12
+#'''
+PIXEL_PIN = machine.Pin(NEOPIN, machine.Pin.OUT) 
 
 # function demo
 def demo(np):
     n = np.n
 
     # cycle
+    print('cycle')
     for i in range(4 * n):
         for j in range(n):
             np[j] = (0, 0, 0)
         np[i % n] = (255, 255, 255)
         np.write()
         time.sleep_ms(25)
+    
+    off()
+    time.sleep(2.0)
 
     # bounce
+    print('bounce')
     for i in range(4 * n):
         for j in range(n):
             np[j] = (0, 0, 128)
@@ -40,7 +50,11 @@ def demo(np):
         np.write()
         time.sleep_ms(60)
 
+    off()
+    time.sleep(2.0)
+
     # fade in/out
+    print('fade in/out')
     for i in range(0, 4 * 256, 8):
         for j in range(n):
             if (i // 256) % 2 == 0:
@@ -49,11 +63,10 @@ def demo(np):
                 val = 255 - (i & 0xff)
             np[j] = (val, 0, 0)
         np.write()
-
+        time.sleep(0.1)
+    
     # clear
-    for i in range(n):
-        np[i] = (0, 0, 0)
-    np.write()
+    off()
 
 # 2016_1204 PePo added off() to blank neopixels
 def off():
