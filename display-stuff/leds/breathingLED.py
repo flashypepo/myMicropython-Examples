@@ -12,29 +12,34 @@
 from machine import Pin, PWM
 import time
 
-LEDPin = 5 #16 # NodeMCU D1/GPIO05, initially D0 / GPIO16
+LEDPin = 15 # NodeMCU D8/GPIO15 (Amica) D1/GPIO05, initially D0 / GPIO16
 BRIGHT = 768 #512 #max LED intensity (1-1023)
 #INHALE = 1250 #inhalation time in millisec --PePo not used
 #PULSE = INHALE * 1000 / BRIGHT --PePo not used
 REST = 1000 # rest between inhalations
 
 # Setup
-pwm5 = PWM(Pin(LEDPin), freq=1000) # PWM-pin
+pwm = PWM(Pin(LEDPin), freq=1000) # PWM-pin
 
 # Loop
 while True:
-    # ramp increasing intensity, inhalation
-    #print("inhalation...")
-    for i in range(1, BRIGHT, 1):
-        #print("duty=", i)
-        pwm5.duty(i)
-        time.sleep_ms(2)
+    try:
+        # ramp increasing intensity, inhalation
+        #print("inhalation...")
+        for i in range(1, BRIGHT, 1):
+            #print("duty=", i)
+            pwm.duty(i)
+            time.sleep_ms(2)
 
-    # ramp decreasing intensity, exhalation (half time)
-    #print("exhalation...")
-    for i in range(BRIGHT, 1, -2):
-        #print("duty=", i)
-        pwm5.duty(i)
-        time.sleep_ms(2)
+        # ramp decreasing intensity, exhalation (half time)
+        #print("exhalation...")
+        for i in range(BRIGHT, 1, -2):
+            #print("duty=", i)
+            pwm.duty(i)
+            time.sleep_ms(2)
 
-    time.sleep_ms(REST) # take a rest
+        time.sleep_ms(REST) # take a rest
+        
+    except KeyboardInterrupt:
+        pwm.value = 0 # led off
+        print('done')

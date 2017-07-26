@@ -1,7 +1,7 @@
 My MicroPython modules to compile with tool ‘mpy-cross’ as frozen modules. Preferable included into the firmware.
 
-2017-07** 
-add sdcard.py
+2017-07** to be added
+sdcard.py
 
 2017-0522
 Used in ESP32 building firmware. See VM: folder esp32/modules
