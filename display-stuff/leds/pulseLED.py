@@ -8,8 +8,10 @@
 import machine
 import time, math
 
+_LEDPIN = 5 #5=WeMOS_Lolin32 2=Lolin_OLED
+
 print('Pulse LED...')
-led = machine.PWM(machine.Pin(2), freq=1000)
+led = machine.PWM(machine.Pin(_LEDPIN), freq=1000)
 
 def pulse(l, t):
     for i in range(20):
