@@ -13,8 +13,7 @@ import math
 import neopixel
 import time
 
-''' 2017_0204 Feather Neopixel matrix: 8 * 4 pixels
-# LED matrix: 8 * 8 pixels
+#''' 2017_0204 Feather Neopixel matrix: 8 * 4 pixels, GPIO15
 PIXEL_WIDTH = 8
 PIXEL_HEIGHT = 4 #8
 PIXEL_PIN = 15  #Feather Neopixel matrix connected  to pin GPIO15
