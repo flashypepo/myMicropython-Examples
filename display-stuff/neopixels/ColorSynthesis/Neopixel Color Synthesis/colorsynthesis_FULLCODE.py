@@ -1,11 +1,11 @@
-'''
-Micro/CircuitPython NeoPixel Color Synthesis Experiments pt. 1
+# Micro/CircuitPython NeoPixel Color Synthesis Experiments pt. 1
 # Author: Tony DiCola
 # License: Public Domain
 #
-# 2017_0318 PePo adoptions to NodeMCU (ESP8266) - micropython, neopixelpin, neopixels
+# 2017_0522 PePo: downloaded and adopted to MicroPython - not tested yet.
+# source: https://gist.github.com/tdicola/f4324c9ae813410182d5ed00e866c8fb
 #
-# This is like an ipython experiment 'notebook' but insted a raw .py file.
+# This is like an ipython experiment 'notebook' but instead a raw .py file.
 # There are 6 commented example blocks below, uncomment _one_ block at a time
 # to run it.  You're meant to go through example by example to see the
 # progression from the start to the 'final' state.  Comment out an example
@@ -32,48 +32,34 @@ Micro/CircuitPython NeoPixel Color Synthesis Experiments pt. 1
 #
 # Modify the sections below that note the board/pin specific configs and
 # MicroPython / CircuitPython specific configs.
-#'''
+
 # Necessary imports:
 import math
 import time
 
 # Uncomment only _one_ of the sections below:
+
 # This section is for CircuitPython, change to your pin & NeoPixel count:
 # import board
 # import nativeio
 # NEOPIXEL_PIN   = board.D6
 # NEOPIXEL_COUNT = 12
 # def seconds():
-#    return time.monotonic()  # CircuitPython function for current seconds.
+#     return time.monotonic()  # CircuitPython function for current seconds.
+
 # This section is for MicroPython, change to your pin & NeoPixel count:
 import machine
 import utime
-
-''' NodeMCU, neopixel D8=GPIO15
-PIXEL_WIDTH = 8
-PIXEL_HEIGHT = 8
-NEOPIXEL_PIN = machine.Pin(15, machine.Pin.OUT)  # GPIO15=D8 on NodeMCU
-NEOPIXEL_COUNT = PIXEL_WIDTH * PIXEL_HEIGHT  # neopixelmatrix
-#'''
-#''' Adafruit Feather Huzzah ESP8266 + Neopixel Wing
-PIXEL_WIDTH = 8
-PIXEL_HEIGHT = 4
-MAX_BRIGHT = 30 #2017-0725
-NEOPIXEL_PIN = machine.Pin(15, machine.Pin.OUT)
-#'''
-
+NEOPIXEL_PIN   = machine.Pin(6, machine.Pin.OUT)
+NEOPIXEL_COUNT = 12
 def seconds():
-    return utime.ticks_ms() / 1000  # MicroPython code for current seconds
-
+    return utime.ticks_ms()/1000  # MicroPython code for current seconds
 
 # Setup NeoPixels:
-# PePo: blank neopixels
 import neopixel
-
 pixels = neopixel.NeoPixel(NEOPIXEL_PIN, NEOPIXEL_COUNT)
-pixels.fill((0, 0, 0))
+pixels.fill((0,0,0))
 pixels.write()
-time.sleep(0.5)  # PePo added
 
 
 ################################################################################
@@ -90,6 +76,7 @@ time.sleep(0.5)  # PePo added
 #     print("r={}\tg={}\tb={}".format(*color))
 #     time.sleep(0.1)
 
+
 ################################################################################
 # Example 2:
 # Refactor to add variables that make changing the behavior easier.
@@ -103,7 +90,7 @@ time.sleep(0.5)  # PePo added
 # while True:
 #     red = int(amplitude*math.sin(2*math.pi*frequency*seconds()+phase)+\
 #               offset)
-#     color = (red, 255-red, 0)
+#     color = (red, 0, 0)
 #     pixels.fill(color)
 #     pixels.write()
 #     print("r={}\tg={}\tb={}".format(*color))
@@ -118,16 +105,13 @@ time.sleep(0.5)  # PePo added
 # def sine_wave(amplitude, frequency, phase, offset):
 #     return lambda t: amplitude*math.sin(2*math.pi*frequency*t+phase)+offset
 #
-# red_wave = sine_wave(128, 1.25, 0, 128)
+# red_wave = sine_wave(128, 0.25, 0, 128)
 # green_wave = sine_wave(128, 0.25, math.pi, 128)
-# blue_wave = sine_wave(128, 0.25, 0, 128)
 # while True:
 #     current = seconds()
 #     red = int(red_wave(current))
 #     green = int(green_wave(current))
-#     blue = int(blue_wave(current))
-#     #color = (red, green, blue)
-#     color = (red, green, blue)
+#     color = (red, green, 0)
 #     pixels.fill(color)
 #     pixels.write()
 #     print("r={}\tg={}\tb={}".format(*color))
@@ -173,7 +157,7 @@ time.sleep(0.5)  # PePo added
 #                                        self.phase)
 #
 # red_wave   = SineWave(frequency=0.25)
-# green_wave = SineWave(frequency=0.1, phase=math.pi)
+# green_wave = SineWave(frequency=0.25, phase=math.pi)
 # while True:
 #     current = seconds()
 #     red_wave.time = current
@@ -192,103 +176,100 @@ time.sleep(0.5)  # PePo added
 # Refactor to allow the sine wave signal to be built from other signals (i.e.
 # changing time, frequency, etc. with other signals!).
 ################################################################################
-class Signal:
-    @property
-    def range(self):
-        return None
-
-    def __call__(self):
-        raise NotImplementedError('Signal must have a callable implementation!')
-
-    def transform(self, y0, y1):
-        # Transform the current value of this signal to a new value inside the
-        # specified target range (y0...y1).  If this signal has no bounds/range
-        # then the value is just clamped to the specified range.
-        x = self()
-        if self.range is not None:
-            # This signal has a known range so we can interpolate between it
-            # and the desired target range (y0...y1).
-            return y0 + (x - self.range[0]) * \
-                        ((y1 - y0) / (self.range[1] - self.range[0]))
-        else:
-            # No range of values for this signal, can't interpolate so just
-            # clamp to a value inside desired target range.
-            return max(y0, min(y1, x))
-
-    def discrete_transform(self, y0, y1):
-        # Transform assuming discrete integer values instead of floats.
-        return int(self.transform(y0, y1))
-
-
-class SignalSource:
-    def __init__(self, source=None):
-        self.set_source(source)
-
-    def __call__(self):
-        # Get the source signal value and return it when reading this signal
-        # source's value.
-        return self._source()
-
-    def set_source(self, source):
-        # Allow setting this signal source to either another signal (anything
-        # callable) or a static value (for convenience when something is a
-        # fixed value that never changes).
-        if callable(source):
-            # Callable source, save it directly.
-            self._source = source
-        else:
-            # Not callable, assume it's a static value and make a lambda
-            # that's callable to capture and always return it.
-            self._source = lambda: source
-
-
-class SineWave(Signal):
-    def __init__(self, time=0.0, amplitude=1.0, frequency=1.0, phase=0.0):
-        self.time = SignalSource(time)
-        self.amplitude = SignalSource(amplitude)
-        self.frequency = SignalSource(frequency)
-        self.phase = SignalSource(phase)
-
-    @property
-    def range(self):
-        # Since amplitude might be a changing signal, the range of this signal
-        # changes too and must be computed on the fly!  This might not really
-        # be necessary in practice and could be switched back to a
-        # non-SignalSource static value set once at initialization like before.
-        amplitude = self.amplitude()
-        return (-amplitude, amplitude)
-
-    def __call__(self):
-        return self.amplitude() * \
-               math.sin(2 * math.pi * self.frequency() * self.time() + self.phase())
-
-
-class FrameClock(Signal):
-    def __init__(self):
-        self.update()
-
-    def update(self):
-        self._current_s = seconds()
-
-    def __call__(self):
-        return self._current_s
-
-
-clock = FrameClock()
-red_wave = SineWave(time=clock, frequency=0.25)
-green_wave = SineWave(time=clock, frequency=0.25, phase=math.pi)
-blue_wave = SineWave(time=clock, frequency=0.25, phase=clock) #PePo added
-MAX_BRIGHTNESS = 32 #PePo added
-while True:
-    clock.update()
-    red = red_wave.discrete_transform(0, MAX_BRIGHTNESS)
-    green = green_wave.discrete_transform(0, MAX_BRIGHTNESS)
-    blue = blue_wave.discrete_transform(0, MAX_BRIGHTNESS)
-    color = (red, green, blue)
-    pixels.fill(color)
-    pixels.write()
-    print("r={}\tg={}\tb={}".format(*color))
-    time.sleep(0.1)
+# class Signal:
+#
+#     @property
+#     def range(self):
+#         return None
+#
+#     def __call__(self):
+#         raise NotImplementedError('Signal must have a callable implementation!')
+#
+#     def transform(self, y0, y1):
+#         # Transform the current value of this signal to a new value inside the
+#         # specified target range (y0...y1).  If this signal has no bounds/range
+#         # then the value is just clamped to the specified range.
+#         x = self()
+#         if self.range is not None:
+#             # This signal has a known range so we can interpolate between it
+#             # and the desired target range (y0...y1).
+#             return y0 + (x-self.range[0]) * \
+#                         ((y1-y0)/(self.range[1]-self.range[0]))
+#         else:
+#             # No range of values for this signal, can't interpolate so just
+#             # clamp to a value inside desired target range.
+#             return max(y0, min(y1, x))
+#
+#     def discrete_transform(self, y0, y1):
+#         # Transform assuming discrete integer values instead of floats.
+#         return int(self.transform(y0, y1))
+#
+# class SignalSource:
+#
+#     def __init__(self, source=None):
+#         self.set_source(source)
+#
+#     def __call__(self):
+#         # Get the source signal value and return it when reading this signal
+#         # source's value.
+#         return self._source()
+#
+#     def set_source(self, source):
+#         # Allow setting this signal source to either another signal (anything
+#         # callable) or a static value (for convenience when something is a
+#         # fixed value that never changes).
+#         if callable(source):
+#             # Callable source, save it directly.
+#             self._source = source
+#         else:
+#             # Not callable, assume it's a static value and make a lambda
+#             # that's callable to capture and always return it.
+#             self._source = lambda: source
+#
+# class SineWave(Signal):
+#
+#     def __init__(self, time=0.0, amplitude=1.0, frequency=1.0, phase=0.0):
+#         self.time = SignalSource(time)
+#         self.amplitude = SignalSource(amplitude)
+#         self.frequency = SignalSource(frequency)
+#         self.phase = SignalSource(phase)
+#
+#     @property
+#     def range(self):
+#         # Since amplitude might be a changing signal, the range of this signal
+#         # changes too and must be computed on the fly!  This might not really
+#         # be necessary in practice and could be switched back to a
+#         # non-SignalSource static value set once at initialization like before.
+#         amplitude = self.amplitude()
+#         return (-amplitude, amplitude)
+#
+#     def __call__(self):
+#         return self.amplitude() * \
+#                math.sin(2*math.pi*self.frequency()*self.time() + self.phase())
+#
+# class FrameClock(Signal):
+#
+#     def __init__(self):
+#         self.update()
+#
+#     def update(self):
+#         self._current_s = seconds()
+#
+#     def __call__(self):
+#         return self._current_s
+#
+# clock = FrameClock()
+# red_wave   = SineWave(time=clock, frequency=0.25)
+# green_wave = SineWave(time=clock, frequency=0.25, phase=math.pi)
+# while True:
+#     clock.update()
+#     red = red_wave.discrete_transform(0, 255)
+#     green = green_wave.discrete_transform(0, 255)
+#     color = (red, green, 0)
+#     pixels.fill(color)
+#     pixels.write()
+#     print("r={}\tg={}\tb={}".format(*color))
+#     time.sleep(0.1)
 
 
 ################################################################################
@@ -473,3 +454,4 @@ while True:
 #     pixels.write()
 #     print("freq={}\tr={}\tg={}\tb={}".format(frequency(), *color))
 #     time.sleep(0.1)
+
