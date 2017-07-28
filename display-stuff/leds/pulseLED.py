@@ -8,18 +8,28 @@
 import machine
 import time, math
 
-_LEDPIN = 5 #5=WeMOS_Lolin32 2=Lolin_OLED
-
 print('Pulse LED...')
-led = machine.PWM(machine.Pin(_LEDPIN), freq=1000)
+
+_LEDPIN = 2 #5=WeMOS_Lolin32 2=Lolin_OLED, 2=WeMOS_D1R2
 
 def pulse(l, t):
     for i in range(20):
         l.duty(int(math.sin(i / 10 * math.pi) * 500 + 500))
         time.sleep_ms(t)
 
+def cleanup():
+    global led
+    led.duty(1023) #WeMOS_D1/R2: off due pullUp
+    time.sleep(0.1) #waiT
+    led.deinit() #deinit
+    del led #remove
+
+led = machine.PWM(machine.Pin(_LEDPIN), freq=10000)
+
 ###################################################################
 # Loop code goes inside the loop here, this is called repeatedly: #
 ###################################################################
-while True:
-    pulse(led, 100)
+#while True:
+for i in range(20):
+    pulse(led, 20)
+cleanup()

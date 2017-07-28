@@ -3,5 +3,5 @@
     "period_ms":100,
     "mirror_colors": true,
     "animation": "chase",
-    "pixels": 24
+    "pixels": 8
 }

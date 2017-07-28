@@ -14,11 +14,11 @@
 
 ######## MicroPython (MP) #######
 import machine
-''' SCL/SDA port on NodeMCU:
+#''' SCL/SDA port on NodeMCU/WeMOS D1_R2:
 SCL = 5
 SDA = 4
-'''
-#''' SCL/SDA port on LoLin32:
+#'''
+''' SCL/SDA port on LoLin32:
 SCL = 22
 SDA = 21
 #'''

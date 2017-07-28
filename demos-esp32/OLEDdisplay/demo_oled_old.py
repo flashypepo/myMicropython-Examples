@@ -71,6 +71,10 @@ def showmessage(msg):
     oled.show() # display all
 
 # Configure message that will scroll.
+#MESSAGE = 'Hello world this is a fun scroller!'
+#MESSAGE = 'MicroPython  funny  scroller!'
+#MESSAGE = 'Welkom  Bert ------'
+#MESSAGE = 'Welkom  Peter..........'
 MESSAGE = 'MicropPython Rocks!  '
 
 # Other configuration:
@@ -134,4 +138,3 @@ time.sleep(1) # wait
 # 3. Run scroller function
 #scroller(i2c)')
 print('usage: scroller(i2c)')
-showmessage(['usage:', 'scroller(i2c)'])

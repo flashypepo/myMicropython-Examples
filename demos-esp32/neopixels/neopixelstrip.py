@@ -1,16 +1,18 @@
 # neopixelStick.py - animation for NeoPixel stick 1*8 pixels
 #
 # based upon part 2 from Tony Dicola - Adafruit
+# 2017-0726 PePo utime -> time, ujson -> json
 # 2017-0529 PePo: DIN neopixel is D5 / GPIO14
 # 2017-0121 PePo based upon neopixelMatrix.py (formely lights.py)
 # ------------------
 import machine
 import neopixel
-import utime  # import time 2017-0529: is also valid
-import ujson  # import json 2017-0529: is also valid
+import time  
+import json  
 
 # standard configuration that never changes
 # NodeMCU: neopixels attached to pin D5 (GPIO14)
+# WeMOS Lolin32: neopixel pin = 15
 NEOPIXEL_PIN = 15 #14
 PIXEL_PIN = machine.Pin(NEOPIXEL_PIN, machine.Pin.OUT)
 
@@ -54,7 +56,7 @@ def blank(config, np, pixel_count):
 # solid animation
 def solid(config, np, pixel_count):
     colors = config['colors']
-    elapsed = utime.ticks_ms() // config['period_ms']
+    elapsed = time.ticks_ms() // config['period_ms']
     current = elapsed % len(colors)
     np.fill(colors[current])
     np.write()
@@ -63,7 +65,7 @@ def solid(config, np, pixel_count):
 # chasing animation
 def chase(config, np, pixel_count):
     colors = config['colors']
-    elapsed = utime.ticks_ms() // config['period_ms']
+    elapsed = time.ticks_ms() // config['period_ms']
     for i in range(pixel_count):
         current = (elapsed + i) % len(colors)
         np[i] = colors[current]
@@ -76,7 +78,7 @@ def smooth(config, np, pixel_count):
     # for smoother animation.
     colors = config['colors']
     period_ms = config['period_ms']
-    ticks = utime.ticks_ms()
+    ticks = time.ticks_ms()
     step = ticks // period_ms
     offset = ticks % period_ms
     color0 = colors[step % len(colors)]
@@ -93,7 +95,7 @@ def smooth(config, np, pixel_count):
 # Load configuration from config JSON file.
 # using Python context manager
 with open('config_stick.json', 'r') as infile:
-    config = ujson.load(infile)
+    config = json.load(infile)
 
 # config: mirror_colors
 if (config['mirror_colors']):
@@ -114,7 +116,7 @@ def animationdemo():
     try:
         while True:
             animation(config, np, numberOfPixels)
-            utime.sleep(0.01)
+            time.sleep(0.01)
     except:
         off() # lights off
 

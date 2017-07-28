@@ -1,0 +1,1 @@
+'''main.py - startup various programs2017-0726 PePo neopixelstrip demo'''import machineimport timeimport sysprint(sys.implementation) #display MP-version#''' 2017-0726: neopixel animation, timing ESP32??import neopixelstrip as demodemo.animationdemo()#'''import blinkled #2017-0726import gcgc.collect()print('gc.mem_free:', gc.mem_free())

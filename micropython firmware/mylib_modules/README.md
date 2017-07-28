@@ -1,11 +1,11 @@
-My MicroPython modules to compile with tool ‘mpy-cross’ as frozen modules. Preferable included into the firmware.
+My MicroPython modules to compile with tool ‘mpy-cross’ as frozen modules. 
+Preferable included into the firmware.
+Used in ESP32 building firmware. See VM: folder esp32/modules
 
-2017-07** to be added
+2017-0726
 sdcard.py
 
 2017-0522
-Used in ESP32 building firmware. See VM: folder esp32/modules
-
 Files:
 ili9341.py              rgb.py
 bitmapfont.py           max7219.py              servo.py

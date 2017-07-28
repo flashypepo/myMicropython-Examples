@@ -1,0 +1,1 @@
+'''main.py - startup various programs2017-0726 add display of MP-version2017-0604 PePo blinking BUILTIN LED'''import machineimport timeimport sysprint(sys.implementation) #display MP-version#import blinky#import breathingLED#import knightrider#import pulseLED  #2017-0725import blinkled #2017-0726import gcgc.collect()print('gc.mem_free:', gc.mem_free())
