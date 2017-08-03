@@ -17,7 +17,9 @@ try:
 
     while True:
         t, h = sensor.measure()
-        print('Temperature:', t, 'ºC, RH:', h, '%')
+        #print('Temperature:', t, 'ºC, RH:', h, '%')
+        #TODO: 
+        print('Temperature: {0:0.2f} ºC, humidity: {1:0.2f} %'.format(t, h))
         time.sleep(_WAITIME)
 
 except sht30.SHT30Error as ex:
