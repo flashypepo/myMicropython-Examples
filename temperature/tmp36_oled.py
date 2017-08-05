@@ -1,14 +1,14 @@
 ''' TMP36 temperature  sensor
+2017-0802 PePo initial version
 Let op: verwissel Vs en GND niet van de TMP36!
   pin TMP36   NodeMCU  Huzzah ESP8266
   data-out    A0       ADC
   Vs          3.3V       3.3V
   GND         GND        GND
 #'''
-
 import machine, time
 import ssd1306
-
+#import heartbeat #diagnostic tool
 # using from machine import ADC is bad practice
 
 # calculate temperature (celsius) from voltage value (mV)
@@ -28,7 +28,7 @@ _WARNING_LED_PIN = 14
 i2c = machine.I2C(scl=machine.Pin(5), sda=machine.Pin(4), freq=100000)
 print('i2c.scan: ', i2c.scan())   #[60]
 # OLED screen dimensions
-__WIDTH = const(128) 
+__WIDTH = const(128)
 __HEIGHT = const(32)
 oled = ssd1306.SSD1306_I2C(__WIDTH, __HEIGHT, i2c)
 
