@@ -1,13 +1,12 @@
 ''' LDR photocell sensor on OLED display
-    2017-0805 PePo initial version
+2017_0807 Grove Lightsensor: https://github.com/Seeed-Studio/Light_Sensor/blob/master/examples/Light_Sensor/Light_Sensor.ino
+2017-0805 PePo initial version
 #'''
 import machine, time
 import ssd1306
 
-import machine, time
-
 _ADC_PIN = const(0)
-_WARNING_LED_PIN = const(14)
+_WARNING_LED_PIN = const(4)
 
 # create ADC-object
 adc = machine.ADC(_ADC_PIN)
@@ -29,22 +28,31 @@ def alertOn():
 def alertOff():
     led.off()
 
+'''
+Arduino program
+int sensorValue = analogRead(LIGHT_SENSOR);
+Rsensor = (float)(1023-sensorValue)*10/sensorValue;
+Serial.println("the analog read data is ");
+Serial.println(sensorValue);
+Serial.println("the sensor resistance is ");
+Serial.println(Rsensor,DEC);//show the ligth intensity on the serial monitor;
+'''
+def Rsensor(value):
+    # Convert the analog reading (which goes from 0 - 1023) to a resistor value for the sensor
+    # ref. 10K
+    return (1023.0 - value)*10/value
+
+# Ucc = 1.6 volt
 # Convert the analog reading (which goes from 0 - 1023) to a voltage (0 - Uref):
-_UREF = 1.6 # Ucc=1.6 volt in circuit
+_UREF = 1.6 # Ucc in circuit
 def adc2voltage(value):
     return value * (_UREF / 1023.0)
 
-# Convert the analog reading (which goes from 0 - 1023) to a resistor value for the sensor
-# ref. 10K
-__MAX_VALUE = const(1023)
-def Rsensor(value):
-    return max( (__MAX_VALUE - value)*10/value, 0)
-
 # run reading sensor, Ctrl-C to abort
 #WERKT NIET: _TRESHOLD = const(500) # sensorvalue
-_TRESHOLD = 1.0 #0.7 # voltage
+_TRESHOLD = 0.7 # voltage
 def run(dt=2.0):
-    print('LDR demo on OLED')
+    print('lightsensor demo on OLED')
     try:
         while True:
             oled.fill(0)  # clear screen
@@ -54,8 +62,8 @@ def run(dt=2.0):
             print('Photocell reading {0}\tvoltage {1:0.2f}\trsensor {2:0.2f}'.format(reading, voltage, rsensor))
             oled.text('Sensor: {0} '.format(reading),0,0)
             oled.text('Voltage: {0:0.2f}'.format(voltage),0,10)
-            oled.text('Rsensor: {0:0.1f}'.format(rsensor),0,20)
-            if voltage > _TRESHOLD:
+            oled.text('Rsensor: {0:0.0f}'.format(rsensor),0,20)
+            if voltage < _TRESHOLD:
                 alertOn()
             else:
                 alertOff()
