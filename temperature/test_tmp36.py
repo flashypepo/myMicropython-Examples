@@ -10,7 +10,7 @@ import machine, time
 
 # calculate temperature (celsius) from voltage value (mV)
 def temp(value):
-	#NOT_VALID? 
+	#NOT_VALID?
     return (value - 500) / 10 #Huzzah
 	#NodeMCU: return (value) / 10
 
