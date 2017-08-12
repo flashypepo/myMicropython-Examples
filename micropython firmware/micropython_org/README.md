@@ -1,4 +1,4 @@
-# ESP32 - version 25th July 2017: address starts at 0x1000 to allow flash size autodetect.
+# ESP32 - versions >25th July 2017: address starts at 0x1000 to allow flash size autodetect.
 # 2017-0726 test op de WeMOS Lolin32 was successful!
 
 $esptool.py --port /dev/tty.SLAB_USBtoUART erase_flash
