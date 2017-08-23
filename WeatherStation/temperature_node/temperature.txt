@@ -1,0 +1,1 @@
+location,year,month,day,hour,minutes,seconds,temperature(C)
