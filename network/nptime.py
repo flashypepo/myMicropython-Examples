@@ -1,4 +1,5 @@
 # from micropython >> esp8266 >> network
+# 2017-0818 PePo 2de test - okay. run nptime.settime()
 # 2017-0708 PePo - 1st test: does not seems te work yet
 try:
     import usocket as socket
