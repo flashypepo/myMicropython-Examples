@@ -1,5 +1,6 @@
 '''
 class TMP36 temperature  sensor
+2017_0810 PePo added @property and @threshold.setter - not tested!
 2017_0810 PePo first version
 #'''
 from micropython import const
@@ -19,13 +20,15 @@ class TMP36:
         # make sure there is always a temperature value read
         self.read()
 
-    # set threshold for temperature warning
-    def threshold(self, threshold=None):
-        # no parameter: act as getter
-        if threshold is None:
-            return self._threshold
-        # parameter: act as setter
-        self._threshold = threshold
+    # get threshold temperature celsius for temperature warning
+    @property
+    def threshold(self):
+        return self._threshold
+
+    @threshold.setter
+    def threshold(self, temperature):
+        """set threshold to a temperature in Celsius"""
+        self._threshold = temperature
 
     # returns temperature value in Fahrenheit
     # pre-condition: self_value is not None
