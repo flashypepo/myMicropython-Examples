@@ -2,3 +2,19 @@
 network/pepodevnet.txt alias
 
 .spyproject/workspace.ini
+
+.vscode/settings.json
+
+.idea/workspace.xml
+
+.idea/vcs.xml
+
+.idea/vagrant.xml
+
+.idea/modules.xml
+
+.idea/misc.xml
+
+.idea/micropython.iml
+
+.idea/inspectionProfiles/Project_Default.xml
