@@ -3,7 +3,7 @@
 # based upon part 2 from Tony Dicola - Adafruit
 # 2017-0121 PePo renamed configuration file
 # 2016-1204 PePo new, copied/adopted from
-# part 2: 
+# part 2:
 #   https://gist.github.com/tdicola/4d1788a415aaeb32c7f4dddbed1c3327
 # part 1:
 #   https://gist.github.com/tdicola/55c7ba333933bccaa75526a07b266bf2
@@ -15,8 +15,9 @@ import ujson
 
 # standard configuration that never changes
 # NodeMCU: neopixels attached to pin D7 (GPIO13)
-PIXEL_PIN = machine.Pin(13, machine.Pin.OUT)
-
+# 2017-0904; Neopixel featherwing: pin#15 (default)
+#PIXEL_PIN = machine.Pin(13, machine.Pin.OUT)
+PIXEL_PIN = machine.Pin(15, machine.Pin.OUT)
 
 # ########################################################
 # mirror the colors to make a ramp up and ramp down with no repeated colors.

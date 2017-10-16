@@ -5,12 +5,12 @@
 # http://www.raspberrypi-spy.co.uk/2012/06/knight-rider-cylon-lights-for-the-raspberry-pi/
 
 # Leuk idee voor Open Dag / demo:
-# JBF techniek: Leds aansturen door functies te maken die led-combinaties gebruiken 
+# JBF techniek: Leds aansturen door functies te maken die led-combinaties gebruiken
 #               (led[i] AAN, led[j] UIT).
-# BETER: essentie van de led-rij is een rij getallen waarvan '1' betekent 'led aan', 
-#        en '0' 'led uit'. Gevolg is de reeks sequences (andere patronen). 
+# BETER: essentie van de led-rij is een rij getallen waarvan '1' betekent 'led aan',
+#        en '0' 'led uit'. Gevolg is de reeks sequences (andere patronen).
 #        Dit heet een model van de applicatie maken (abstractie).
-# GEVOLG: het abstraheren van de concrete gevallen (jargon: 'modelleren', levert een 
+# GEVOLG: het abstraheren van de concrete gevallen (jargon: 'modelleren', levert een
 #       flexibeler programma op. In dit geval: zelfde algorithme, andere LED-animatie.
 
 # Import required libraries
@@ -19,7 +19,8 @@ import time
 
 # Define GPIO signals to use that are connected to LEDs
 # extends tuple, if necessary
-ledGPIO = (16, 26, 19)
+#ledGPIO = (16, 26, 19)
+ledGPIO = (14, 12, 15) # HUZZAH
 
 # define a list of LEDs based upon ledGPIO
 def setupLeds(ledGPIO):

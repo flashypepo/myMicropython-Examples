@@ -4,6 +4,7 @@ Two modes:
 2. callback, properly defined. Requires program checks status (while True).
 2017-0808 PePo initial setup
 '''
+import micropython
 import machine, time
 import ssd1306
 

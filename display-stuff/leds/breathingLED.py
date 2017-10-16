@@ -1,6 +1,7 @@
 # LED_Breathing in micropython
 #   trial-and-error for BRIGHT and wait
 #   Uses D1 / /GPIO05 with PWM
+# 2017-0917 PePo pwm.value=0 => pwm.duty(0), test op TTGO ESP32
 # by PePo 2017_0325, based upon idea from ardunaut
 #
 # Source:
@@ -12,7 +13,8 @@
 from machine import Pin, PWM
 import time
 
-LEDPin = 15 # NodeMCU D8/GPIO15 (Amica) D1/GPIO05, initially D0 / GPIO16
+# TTGO ESP32: red led on GPIO13, NodeMCU D8/GPIO15 (Amica) D1/GPIO05, initially D0 / GPIO16
+LEDPin = 13
 BRIGHT = 768 #512 #max LED intensity (1-1023)
 #INHALE = 1250 #inhalation time in millisec --PePo not used
 #PULSE = INHALE * 1000 / BRIGHT --PePo not used
@@ -41,5 +43,5 @@ while True:
         time.sleep_ms(REST) # take a rest
         
     except KeyboardInterrupt:
-        pwm.value = 0 # led off
+        pwm.duty(0) # led off
         print('done')

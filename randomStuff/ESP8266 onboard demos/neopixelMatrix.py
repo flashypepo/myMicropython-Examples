@@ -113,12 +113,16 @@ np = neopixel.NeoPixel(PIXEL_PIN, numberOfPixels)
 off()  # pixels off
 
 # demo animation...
-def demo_neopixels():
+def demo():
     # determine the animation function to call
     animation = globals().get(config['animation'], blank)
 
     # ########################################################
     # Main loop
-    while True:
-        animation(config, np, numberOfPixels)
-        utime.sleep(0.01)
+    try:
+        while True:
+            animation(config, np, numberOfPixels)
+            utime.sleep(0.01)
+    except:
+        off()
+        print('demo done')

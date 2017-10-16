@@ -92,7 +92,9 @@ s.connect(addr[0][4])
 
 # send request for city, using key
 #OK: s.send(b'GET http://api.openweathermap.org/data/2.5/weather?q=London&appid=%s HTTP/1.0\r\n\r\n' % key)
-s.send(b'GET http://api.openweathermap.org/data/2.5/weather?q=Amsterdam,nl&appid=%s HTTP/1.0\r\n\r\n' % key)
+#117: s.send(b'GET http://api.openweathermap.org/data/2.5/weather?q=Amsterdam,nl&appid=%s HTTP/1.0\r\n\r\n' % key)
+s.send(b'GET http://api.openweathermap.org/data/2.5/weather?q=Amsterdam,nl&appid=cac77abc97ceafbe446a455019c247fe')
+#s.send(b'GET http://api.openweathermap.org/data/2.5/weather?q=Amsterdam,nl&appid=[0] HTTP/1.0\r\n\r\n'.format(key))
 # should return '111'  ???
 
 # show received data -- first 1000 chars

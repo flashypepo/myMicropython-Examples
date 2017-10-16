@@ -10,7 +10,7 @@ import time, math
 
 print('Pulse LED...')
 
-_LEDPIN = 2 #5=WeMOS_Lolin32 2=Lolin_OLED, 2=WeMOS_D1R2
+_LEDPIN = 13 #13=TTGO ESP32, 5=WeMOS_Lolin32 2=Lolin_OLED, 2=WeMOS_D1R2
 
 def pulse(l, t):
     for i in range(20):
@@ -29,7 +29,7 @@ led = machine.PWM(machine.Pin(_LEDPIN), freq=10000)
 ###################################################################
 # Loop code goes inside the loop here, this is called repeatedly: #
 ###################################################################
-#while True:
-for i in range(20):
+#for i in range(20):
+while True:
     pulse(led, 20)
 cleanup()

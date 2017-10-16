@@ -10,15 +10,18 @@
 import machine
 import time
 print('Blinking LED...')
-led = machine.Pin(2, machine.Pin.OUT) #D8
-led.high() # init led OFF
-time.sleep(0.1) # wait 
+# Huzzah: pin#2 blue led, pin#0 red led
+#LED_PIN = 0 # red LED
+LED_PIN = 2 # blue LED
+led = machine.Pin(LED_PIN, machine.Pin.OUT) #builtin LED Feather Huzzah
+led.value(1) #v1.9.* DEPRECATED: led.high() # init led OFF
+time.sleep(0.1) # wait
 
 while True:
     ###################################################################
     # Loop code goes inside the loop here, this is called repeatedly: #
     ###################################################################
-    led.low()  #on
+    led.value(0) # DEPRECATED in 1.9.*: led.low()  #on
     time.sleep(0.5)
-    led.high() #off
+    led.value(1) # DEPRECATED in 1.9.*: led.high() #off
     time.sleep(0.5)
