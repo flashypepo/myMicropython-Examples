@@ -17,6 +17,7 @@ from time import sleep_us
 
 class Ultrasonic:
     """HC-SR04 ultrasonic ranging module class."""
+    _dist = 0
 
     def __init__(self, trig_Pin, echo_Pin):
         """Initialize Input(echo) and Output(trig) Pins."""
@@ -29,6 +30,7 @@ class Ultrasonic:
         self._trig.init(Pin.OUT)
         self._echo.init(Pin.IN)
         self._sound_speed = 340  # m/s
+        self._dist = 0
 
     def _pulse(self):
         """Trigger ultrasonic module with 10us pulse."""
@@ -41,8 +43,8 @@ class Ultrasonic:
         self._pulse()
         #PePo: pulse_width_s = time_pulse_us(self._echo, Pin.high) / 1000000
         pulse_width_s = time_pulse_us(self._echo, 1) / 1000000
-        dist_m = (pulse_width_s / 2) * self._sound_speed
-        return dist_m
+        self._dist = (pulse_width_s / 2) * self._sound_speed
+        return self._dist
 
     def calibration(self, known_dist_m):
         """Calibrate speed of sound."""
@@ -53,8 +55,9 @@ class Ultrasonic:
     # 2017-1014 PePo added as helper
     def distance_in_cm(self):
         """return calculated distance [cm]."""
-        dist_cm = self.distance()
-        return dist_cm
+        # 2017-1022 do not measure distance again
+        #dist_m = self.distance()
+        return self._dist * 100
 
 '''
 2017_1014 PePo: volgend werkt in de REPL:

@@ -12,10 +12,17 @@ hc = ultrasonic.Ultrasonic( trigger, echo)
 
 dist = 0  # distance value
 
-while True:
-    # Get reading from sensor
-    #PePo TODO: dist = hc.distance_in_cm()
-    dist = hc.distance()
-    print('afstand is {0:3.1f} cm'.format(dist*100))
-    sleep(1)
+# function to get distance for ever
+def run(dt=0.5):
+    while True:
+        # Get reading from sensor
+        dist = hc.distance() # distance in m
+        #ok: print('afstand is {0:3.1f} cm'.format(dist*100))
+        print('{0:3.1f}'.format(dist*100)) # distance in cm
+        sleep(dt)
 
+# doit...
+try:
+    run()
+except:
+    print(None)
