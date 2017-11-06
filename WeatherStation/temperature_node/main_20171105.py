@@ -67,8 +67,7 @@ def serialDisplay(dt=2.0):
     while True:
         led.on()
         
-        temp = ds18b20.temperature(ds)
-        timestamp = utime.localtime()
+         timestamp = utime.localtime()
         #print('{0},{1},{2},{3},{4},{5},{6},{7:0.2f}'.format(_LOCATION, timestamp[0],timestamp[1],timestamp[2],_tc(timestamp[3]),timestamp[4],timestamp[5],temp))
         print( temp_record(timestamp, temp) )
         
