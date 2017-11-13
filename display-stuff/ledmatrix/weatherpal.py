@@ -5,8 +5,12 @@ import json
 import urequests
 
 API_KEY = "cac77abc97ceafbe446a455019c247fe" #OpenWeather Micropython test
-CITY = "Amsterdam,NL"
+#CITY = "Amsterdam,NL"
+CITY = "Naarden,NL" #2017_1113 added
 
+#2017-1113 replaced
+from icons import ICONS
+'''
 ICONS = {
     '00': (
         0b00000000,
@@ -109,6 +113,10 @@ ICONS = {
         0b00000000,
     ),
 }
+#'''
+#2017-1113 replaced
+from digits import DIGITS
+'''
 DIGITS = {
     ' ': (
         0b0000,
@@ -209,7 +217,7 @@ DIGITS = {
         0b0000,
     ),
 }
-
+#'''
 i2c = I2C(scl = Pin(5), sda = Pin(4)) #PP changed 2017-1028
 matrix = Matrix8x8(i2c, address=0x70) #PP changed 2017-1028
 #using default address 8x8 led-matrix
@@ -244,6 +252,7 @@ def show_text(text):
 
 
 def get_weather():
+    print("Het weer voor ", CITY)
     r = urequests.get("http://api.openweathermap.org/data/2.5/weather"
                       "?q=%s&appid=%s" % (CITY, API_KEY)).json()
     return r["weather"][0]["icon"], int(r["main"]["temp"] - 273.15)
@@ -295,8 +304,8 @@ def runtrycatch():
             show(ICONS[icon[:2]])
             utime.sleep(4)
             wait -= 1
-    except OSError:
-        print('OSErrorException')
+    except OSError as e:   #2017-1113 added 'as e'
+        print('OSErrorException: ', e)
         pass
         runtrycatch()
     except KeyboardInterrupt:
@@ -304,4 +313,3 @@ def runtrycatch():
         matrix.fill(0)
         show_text(' ')
         print('demo done')
-     
