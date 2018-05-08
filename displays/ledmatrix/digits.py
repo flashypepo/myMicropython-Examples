@@ -1,6 +1,5 @@
 # collection of DIGITS for icons on 8x8 led-matrix
 # 2017-0722 PePo from https://hackaday.io/project/20839-weather-pal
-
 DIGITS = {
     ' ': (
         0b0000,
