@@ -3,23 +3,25 @@
 # Adafruit article:
 # https://learn.adafruit.com/micropython-hardware-digital-i-slash-o/digital-inputs
 
+from micropython import const
 import machine, time
 
-# define button on pin 12, PULL_UP for proper state
-# see Adafruit article!
-button = machine.Pin(12, machine.Pin.IN, machine.Pin.PULL_UP)
+# class LED
 
-#define LED on pin 14 to be set on / off by button
-led = machine.Pin(14, machine.Pin.OUT)
+# see Adafruit article!
+# 2018-0313 PePo: button with LED: requires two GPIO-pins
+#   BUTTON_PIN, PULL_UP for proper state
+#   LED_PIN, Pin.OUT
+#   WeMOS Lolin32, led=built-in = 5
+#define button:
+BUTTON_PIN = const(12)
+button = machine.Pin(BUTTON_PIN, machine.Pin.IN, machine.Pin.PULL_UP)
+#define led:
+LED_PIN = const(13)
+led = Led(LED_PIN)
 led.off()
 
-# helper functions
-def ledOn():
-    led.value(1)
-
-def ledOff():
-    led.value(0)
-
+# loop
 while True:
     first = button.value()
     time.sleep(0.01)
